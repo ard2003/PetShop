@@ -1,0 +1,104 @@
+.nav-body{
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    background-color: black;
+    height: 100%;
+    width: 100%;
+
+    .nav-bar{
+        width:15rem;
+        background-color:rgb(42, 41, 41);
+        height: 150rem;
+        justify-content: center;
+
+        .header{
+            margin-top: 30px;
+
+            .head-icon{
+                font-size: 6rem
+            }
+        }
+        .contents{
+            color: gainsboro;
+          text-decoration: none;
+          font-size: medium;
+          justify-content: center;
+          width: 15rem;
+
+          .contents-links{
+            color: gainsboro;
+            margin-top: 10rem;
+            padding: 15px;
+          }
+
+          .line{
+            border-top: 1px solid white;
+          }
+
+          .logout{
+            margin-bottom: 10px;
+            color: gainsboro;
+            margin-top: 20rem;
+            
+          }
+        }
+    }
+    .header h2 {
+    font-size:34px; font-weight:500; text-transform:uppercase;
+    margin-left: 1 px;
+    
+  }
+  .header h2:before {
+      background-color: #c50000;
+      border-radius: 0.25rem;
+      content: '';
+      display: block;
+      height: 0.25rem;
+      width: 42px;
+      margin-bottom: 1.25rem;
+      justify-content: center;
+  }
+.body{
+    font-family:  "Poppins", sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 0rem;
+
+    .card-body{
+        border-radius: 7px;
+        color: black;
+        width: 18rem;
+        border: 1px solid black;
+        padding: 5px;
+        
+        img{
+            width: 15rem;
+        }
+        button{
+            
+            border-radius: 5px;
+            border:0px ;
+            padding: 5px;
+            padding-left: 8px;
+           
+
+        }
+        .delete{
+            background-color: red;
+            margin-left: 3px;
+            color: wheat;
+            margin-bottom: 3px;
+        }
+        .edit{
+            margin-left: 30px;
+            background-color: greenyellow;
+            width: 60px;
+            color: white;
+        }
+    }
+}
+
+}
+  

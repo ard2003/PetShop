@@ -1,0 +1,46 @@
+.logbody{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 100%;
+    height: 100vh;
+    font-family: "Poppins", sans-serif;
+
+
+    .input-body{
+        width: 30rem;
+        height: 30rem;
+        background-color: black;
+        border-radius: 25px;
+
+        .header{
+            font-size:3rem;
+            color: gainsboro;
+            margin-top: 30px;
+        }
+
+        .input-log{
+         border-radius: 5px;
+         justify-content: center;
+         margin-top: 30px;
+         width: 25rem;
+         height: 2rem;
+         background-color: black;
+        border: 0.1px solid lemonchiffon;
+        color: white;
+        }
+        .log-btn{
+            background-color: lightseagreen;
+            border-radius: 5px;
+            width: 8rem;
+            height: 2.5rem;
+            border: 0px;
+            margin-top: 4rem;
+            font-weight: bold;
+            color: white
+           
+        }
+    }
+}

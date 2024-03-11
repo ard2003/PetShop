@@ -1,0 +1,56 @@
+
+.header h2 {
+    font-size:34px; font-weight:500; text-transform:uppercase;
+    margin-left: 1 px;
+    
+  }
+  .header h2:before {
+      background-color: #c50000;
+      border-radius: 0.25rem;
+      content: '';
+      display: block;
+      height: 0.25rem;
+      width: 42px;
+      margin-bottom: 1.25rem;
+      justify-content: center;
+  }
+.body{
+    font-family:  "Poppins", sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 15rem;
+
+    .card-body{
+        border-radius: 7px;
+        color: black;
+        width: 18rem;
+        border: 1px solid black;
+        padding: 5px;
+        
+        img{
+            width: 15rem;
+        }
+        button{
+            
+            border-radius: 5px;
+            border:0px ;
+            padding: 5px;
+            padding-left: 8px;
+            margin-bottom: 5px;
+
+        }
+        .delete{
+            background-color: red;
+            margin-left: 3px;
+            color: wheat;
+        }
+        .edit{
+            margin-left: 30px;
+            background-color: greenyellow;
+            width: 60px;
+            color: white;
+        }
+    }
+}
