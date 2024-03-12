@@ -13,7 +13,7 @@ const Prodect = () => {
   const [show, setShow] = useState(false);
 
   const handleEdit = (index) => {
-    setShow(true)
+    setShow(true) 
     setEditIndex(index);
     setEditData(productDatas[index]);
   };
@@ -61,7 +61,44 @@ const Prodect = () => {
   
 
   return (
-    <div className="body">
+    <>
+      {isAdding ? (
+        <div>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={newProduct.name}
+            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+          />
+          
+               
+                <input
+            type="text"
+            name="price"
+            placeholder="Price"
+            value={newProduct.price}
+            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+          />
+            
+          <input
+            type="text"
+            name="image"
+            placeholder="Image URL"
+            value={newProduct.image}
+            onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
+          />
+          <button onClick={handleSaveNewProduct} className="save-button">Save</button>
+          <button onClick={handleCancelAdd}className="cancel-button">Cancel</button>
+        </div>
+      ) : (
+        <button onClick={handleAdd} className="add-button">Add Product</button>
+      )}
+    <div className="main-body">
+    <NavbarAdmin />
+    
+    <div className="body" >
+      
       {productDatas.map((data, index) => (
         <div className="card-body" key={index}>
           {editIndex === index ? (
@@ -98,43 +135,10 @@ const Prodect = () => {
           )}
         </div>
       ))}
-      {isAdding ? (
-        <div>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={newProduct.name}
-            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-          />
-          <Modal show={show} onHide={handleClose}>
-              
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                <input
-            type="text"
-            name="price"
-            placeholder="Price"
-            value={newProduct.price}
-            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-          />
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          <input
-            type="text"
-            name="image"
-            placeholder="Image URL"
-            value={newProduct.image}
-            onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
-          />
-          <button onClick={handleSaveNewProduct} className="save-button">Save</button>
-          <button onClick={handleCancelAdd}className="cancel-button">Cancel</button>
-        </div>
-      ) : (
-        <button onClick={handleAdd} className="add-button">Add Product</button>
-      )}
+     
+      </div>
     </div>
+    </>
   );
 };
 

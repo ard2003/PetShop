@@ -2,13 +2,12 @@
     font-family: "Poppins", sans-serif;
     display: flex;
     background-color: black;
-    height: 100%;
-    width: 100%;
+    width: 15rem;
 
     .nav-bar{
         width:15rem;
         background-color:rgb(42, 41, 41);
-        height: 150rem;
+        /* height: 150rem; */
         justify-content: center;
 
         .header{

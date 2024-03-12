@@ -8,12 +8,13 @@ import { BiSolidCartAdd } from "react-icons/bi";
 import { FaUser } from "react-icons/fa";
 import { myContext } from "./CreateContext";
 import SearchBar from "./SearchBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoMdLogOut } from "react-icons/io";
 import Modal from "react-bootstrap/Modal";
 import Login from "./Login";
 import Button from "react-bootstrap/Button";
 import toast from "react-hot-toast";
+
 
 const NavBar = ({ onSearch }) => {
   const { setSearch,loged,setLoged } = useContext(myContext);
@@ -25,6 +26,7 @@ const NavBar = ({ onSearch }) => {
     toast.error(" all ready login");
   } else {
   setShow(true);}})
+  const navigate=useNavigate()
 
   const handleClick = () => {
     
@@ -46,7 +48,7 @@ const NavBar = ({ onSearch }) => {
           <img
             src="https://desktop.petshome.app/android-chrome-192x192.png"
             alt=""
-          />
+          onClick={()=>navigate('/adminlog')}/>
         </div>
         <Container style={{ height: "5em" }}>
           <Link to={"/"} className="home-text">
@@ -94,6 +96,8 @@ const NavBar = ({ onSearch }) => {
             </Link>
           )}
           <p className="user-dtl">{localStorage.getItem("username")}</p>
+
+         
         </Container>
       </Navbar>
     </div>

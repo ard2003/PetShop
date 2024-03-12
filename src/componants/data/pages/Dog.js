@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   MDBCard,
   MDBCardBody,
@@ -9,9 +9,11 @@ import {
 } from "mdb-react-ui-kit";
 import ProdectData from "../ProdectData";
 import NavBar from "../Navbar";
+import { myContext } from "../CreateContext";
 
 const Dog = () => {
-    const dogItem = ProdectData;
+  const {productDatas}=useContext(myContext)
+    const dogItem = productDatas;
     const dogItems = dogItem.filter((items) => items.item === "dog-food");
     return (
       <div>
@@ -36,7 +38,7 @@ const Dog = () => {
                 fontFamily: "unset",
                 height: "25em",
                 marginBottom: "5px",
-              }}
+              }} key={items.id}
             >
               <MDBCardImage
                 src={items.image}

@@ -14,7 +14,7 @@ const Home = () => {
        <div className='content'>
         <h3><span>Hi</span> welcome to our petfood shop </h3>
         <button className='btn-home' onClick={()=>sNavigate('/colection')}>shop now</button>
-        <Link to={"/adminlog"}>ard</Link> 
+        
        </div>
     
    </div>

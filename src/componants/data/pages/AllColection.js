@@ -16,9 +16,10 @@ import toast from "react-hot-toast";
 
 
 const AllCollection = () => {
-  const Prodects = ProdectData;
-  const { cart, setCart, loged, formValues, inputValues,loginValue } =
+  const { cart, setCart, loged,productDatas} =
     useContext(myContext);
+  const Prodects = productDatas;
+  
   const navigate = useNavigate();
 
   const [filteredProducts, setFilteredProducts] = useState(Prodects);

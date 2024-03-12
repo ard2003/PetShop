@@ -5,7 +5,7 @@ import { BiLogOutCircle } from "react-icons/bi";
 import { Link } from 'react-router-dom';
 import Prodect from './Prodect';
 import { myContext } from '../CreateContext';
-
+import AllCollection from '../pages/AllColection';
 
 
 const NavbarAdmin = () => {
@@ -36,7 +36,7 @@ return(
        <hr className='line'></hr>
        {isOpen&&(
       <ul>
-        <li><Link className='contents-links-li' onClick={()=>setFilterType('cat-food')}> Cat</Link></li>
+        <li><Link className='contents-links-li' > Cat</Link></li>
         <li> <Link className='contents-links-li'> Dog</Link></li>
         <li> <Link className='contents-links-li' to={'/prodectadd'}> All Products</Link></li>
       </ul>
@@ -48,7 +48,7 @@ return(
        <h4  className='logout'><BiLogOutCircle /> Logout</h4>
       </div>
     </div>
-    <Prodect/>
+    
   </div>
 );
 };

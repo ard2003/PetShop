@@ -3,21 +3,14 @@ import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 
 const User = () => {
-  const [registrations, setRegistrations] = useState([]);
-
-  useEffect(() => {
-    const storedRegistrations = JSON.parse(localStorage.getItem('registrations')) || [];
-    setRegistrations(storedRegistrations);
-  }, []);
-
-  const handleRemoveRegistration = (index) => {
-   
-    const updatedRegistrations = [...registrations];
-    updatedRegistrations.splice(index, 1);
-    localStorage.setItem('registrations', JSON.stringify(updatedRegistrations));
-    setRegistrations(updatedRegistrations);
-  };
-
+  const name=localStorage.getItem('username')
+  const password=localStorage.getItem('password')
+  const email=localStorage.getItem('email')
+  const handleRemoveRegistration=(()=>{
+    localStorage.removeItem('username')
+    localStorage.removeItem('password')
+    localStorage.removeItem('email')
+  })
   return (
     <Table striped bordered hover>
       <thead>
@@ -30,17 +23,17 @@ const User = () => {
         </tr>
       </thead>
       <tbody>
-        {registrations.map((registration, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{registration.username}</td>
-            <td>{registration.email}</td>
-            <td>{registration.password}</td>
+        
+          <tr >
+            <td>{  1}</td>
+            <td>{name}</td>
+            <td>{email}</td>
+            <td>{password}</td>
             <td>
-              <Button onClick={() => handleRemoveRegistration(index)}>Remove</Button>
+              <Button onClick={() => handleRemoveRegistration()}>Remove</Button>
             </td>
           </tr>
-        ))}
+        
       </tbody>
     </Table>
   );

@@ -26,6 +26,7 @@ const MainRoouter = () => {
   const [formValues, setFormValues] = useState(inputValues);
   const [loged, setLoged] = useState(false);
   const [loginValue, setLoginValue] = useState({ email: "", password: "" });
+  const [logedUser,setLogedUser]=useState({})
   return (
     <div>
       <Toaster/>
@@ -43,7 +44,9 @@ const MainRoouter = () => {
           loginValue,
           setLoginValue,
           productDatas, 
-          setProductDatas
+          setProductDatas,
+          logedUser,
+          setLogedUser
 
         }}
       >
