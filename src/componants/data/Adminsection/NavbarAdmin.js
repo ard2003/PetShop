@@ -3,9 +3,8 @@ import './sidebar.css'
 import { MdAdminPanelSettings , MdOutlineArrowDropDown} from "react-icons/md";
 import { BiLogOutCircle } from "react-icons/bi";
 import { Link, useNavigate } from 'react-router-dom';
-import Prodect from './Prodect';
 import { myContext } from '../CreateContext';
-import AllCollection from '../pages/AllColection';
+
 
 
 const NavbarAdmin = () => {
@@ -33,11 +32,11 @@ return(
        <hr className='line'></hr>
        <Link to={'/'} className='contents-links'>Home</Link><br/>
        <hr className='line'></hr>
-       <Link  onClick={toggleDropdown} className='contents-links'>Prodects  <MdOutlineArrowDropDown /> </Link><br/>
+       <Link  onClick={toggleDropdown} className='contents-links' to={'/prodectadd'}>Prodects  <MdOutlineArrowDropDown /> </Link><br/>
        <hr className='line'></hr>
        {isOpen&&(
       <ul>
-        <li><Link className='contents-links-li' onClick={()=>setDogOrCat("cat-food")} > Cat</Link></li>
+        <li><Link className='contents-links-li' onClick={()=>setDogOrCat("cat-food")}> Cat</Link></li>
         <li> <Link className='contents-links-li'onClick={()=>setDogOrCat("dog-food")}> Dog</Link></li>
         <li> <Link className='contents-links-li' onClick={()=>setDogOrCat("")}> All Products</Link></li>
       </ul>

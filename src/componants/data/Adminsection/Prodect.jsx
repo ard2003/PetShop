@@ -100,7 +100,7 @@ const Prodect = () => {
     <div className="body" >
       
       {productDatas.map((data, index) => {
-        if (!dogOrCat || data.item==dogOrCat) {
+        if (!dogOrCat|| data.item==dogOrCat) {
           return(
             <div className="card-body" key={index}>
             {editIndex === index ? (
