@@ -18,6 +18,7 @@ import Prodect from "./Adminsection/Prodect";
 import User from "./Adminsection/User";
 import ProdectData from "./ProdectData";
 
+
 const MainRoouter = () => {
   const [serch, setSerch] = useState("");
   const [cart, setCart] = useState([]);
@@ -25,8 +26,11 @@ const MainRoouter = () => {
   const inputValues = { username: "", email: "", password: "" };
   const [formValues, setFormValues] = useState(inputValues);
   const [loged, setLoged] = useState(false);
-  const [loginValue, setLoginValue] = useState({ email: "", password: "" });
+  const [loginValue, setLoginValue] = useState({ email: "", password: "" ,cart:[]});
+  const [UserData,setUserData]=useState({})
   const [logedUser,setLogedUser]=useState({})
+  const [dogOrCat,setDogOrCat]=useState("")
+  
   return (
     <div>
       <Toaster/>
@@ -45,8 +49,12 @@ const MainRoouter = () => {
           setLoginValue,
           productDatas, 
           setProductDatas,
+          UserData,
+          setUserData,
           logedUser,
-          setLogedUser
+          setLogedUser,
+          setDogOrCat,
+          dogOrCat
 
         }}
       >
@@ -64,6 +72,8 @@ const MainRoouter = () => {
           <Route path="/navbaradmin" element={<NavbarAdmin />} />
           <Route path="/user" element={<User/>} />
           <Route path="/prodectadd" element={<Prodect/>} />
+          
+
 
         </Routes>
       </myContext.Provider>

@@ -104,17 +104,17 @@ const Payment = () => {
 
             <div className="d-flex justify-content-between">
               <p className="mb-2">Shipping</p>
-              <p className="mb-2">$20.00</p>
+              <p className="mb-2">$</p>
             </div>
 
             <div className="d-flex justify-content-between">
               <p className="mb-2">Total(Incl. taxes)</p>
-              <p className="mb-2">$4818.00</p>
+              <p className="mb-2">$</p>
             </div>
 
             <MDBBtn color="info" block size="lg">
               <div className="d-flex justify-content-between">
-                <span>$4818.00</span>
+                <span>$</span>
                 <span>
                   Checkout <i className="fas fa-long-arrow-alt-right ms-2"></i>
                 </span>

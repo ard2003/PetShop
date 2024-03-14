@@ -3,7 +3,7 @@ import React from "react";
 const ProdectData = [
   {
     name: "Deli Duck Fillet Dog Treat",
-    item: "treat",
+    item: "dog-food",
     weight: 0.5,
     price: 12.49,
     image: "https://media.petsathome.com/wcsstore/pah-cas01//300/7129388PL.jpg",

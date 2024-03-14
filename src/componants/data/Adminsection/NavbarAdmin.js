@@ -2,16 +2,17 @@ import React, { useContext, useState } from 'react';
 import './sidebar.css'
 import { MdAdminPanelSettings , MdOutlineArrowDropDown} from "react-icons/md";
 import { BiLogOutCircle } from "react-icons/bi";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Prodect from './Prodect';
 import { myContext } from '../CreateContext';
 import AllCollection from '../pages/AllColection';
 
 
 const NavbarAdmin = () => {
-  const{productDatas}=useContext(myContext)
+  const{productDatas,setDogOrCat}=useContext(myContext)
   const [isOpen, setIsOpen] = useState(false);
   const [filterType,setFilterType]=useState('All Products')
+  const navigate=useNavigate()
   
 
   const toggleDropdown = () => {
@@ -36,16 +37,18 @@ return(
        <hr className='line'></hr>
        {isOpen&&(
       <ul>
-        <li><Link className='contents-links-li' > Cat</Link></li>
-        <li> <Link className='contents-links-li'> Dog</Link></li>
-        <li> <Link className='contents-links-li' to={'/prodectadd'}> All Products</Link></li>
+        <li><Link className='contents-links-li' onClick={()=>setDogOrCat("cat-food")} > Cat</Link></li>
+        <li> <Link className='contents-links-li'onClick={()=>setDogOrCat("dog-food")}> Dog</Link></li>
+        <li> <Link className='contents-links-li' onClick={()=>setDogOrCat("")}> All Products</Link></li>
       </ul>
 
        )}
       
        <Link to={'/user '} className='contents-links'>User</Link>
        <hr className='line'></hr>
-       <h4  className='logout'><BiLogOutCircle /> Logout</h4>
+      
+       <h4  className='logout' onClick={()=>navigate('/')}    ><BiLogOutCircle /> Logout</h4>
+      
       </div>
     </div>
     

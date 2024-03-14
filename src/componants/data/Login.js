@@ -4,28 +4,34 @@ import { Link, useNavigate } from "react-router-dom";
 import { myContext } from "./CreateContext";
 import toast from "react-hot-toast";
 
-const Registration = () => {
-  const { setLoged, setUserData } = useContext(myContext);
-  const [registrationValue, setRegistrationValue] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+const Login = () => {
+  const { setLoged, setUserData,loginValue, setLoginValue } = useContext(myContext);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setRegistrationValue({ ...registrationValue, [name]: value });
+    setLoginValue({ ...loginValue, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Save user data in local storage
-    localStorage.setItem("userData", JSON.stringify(registrationValue));
-    setLoged(true);
-    setUserData(registrationValue); // Set user data in context
-    toast.success("Registration successful");
-    navigate("/");
+    // Retrieve user data from local storage
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const user = storedUsers.find(
+      (storedUser) =>
+        storedUser.email === loginValue.email &&
+        storedUser.password === loginValue.password
+    );
+    if (!user) {
+      toast.error("Invalid email or password");
+    } else {
+      setLoged(true);
+      setUserData(user);
+      setLoginValue(user)
+      toast.success("Login successful");
+      navigate("/");
+    }
   };
 
   return (
@@ -34,20 +40,11 @@ const Registration = () => {
         <form onSubmit={handleSubmit}>
           <MDBInput
             wrapperClass="mb-4"
-            label="Username"
-            id="username"
-            type="text"
-            name="username"
-            value={registrationValue.username}
-            onChange={handleChange}
-          />
-          <MDBInput
-            wrapperClass="mb-4"
             label="Email address"
             id="email"
             type="email"
             name="email"
-            value={registrationValue.email}
+            value={loginValue.email}
             onChange={handleChange}
           />
           <MDBInput
@@ -56,16 +53,16 @@ const Registration = () => {
             id="password"
             type="password"
             name="password"
-            value={registrationValue.password}
+            value={loginValue.password}
             onChange={handleChange}
           />
           <MDBBtn type="submit" className="mb-4">
-            Register
+            Sign in
           </MDBBtn>
         </form>
         <div className="text-center">
           <p>
-            Already have an account? <Link to="/login">Login</Link>
+            Not a member? <Link to="/registration">Register</Link>
           </p>
         </div>
       </MDBContainer>
@@ -73,4 +70,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default Login;

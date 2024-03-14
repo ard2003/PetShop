@@ -15,25 +15,27 @@ import Login from "./Login";
 import Button from "react-bootstrap/Button";
 import toast from "react-hot-toast";
 
-
 const NavBar = ({ onSearch }) => {
-  const { setSearch,loged,setLoged } = useContext(myContext);
+  const { setSearch, loged, setLoged, userData, setUserData } =
+    useContext(myContext);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow =( () => {
-  if (loged) {
-    toast.error(" all ready login");
-  } else {
-  setShow(true);}})
-  const navigate=useNavigate()
+  const handleShow = () => {
+    if (loged) {
+      toast.error(" all ready login");
+    } else {
+      setShow(true);
+    }
+  };
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    
-    localStorage.removeItem("username");
-    localStorage.removeItem("email");
-    localStorage.removeItem("password");
-  setLoged(false) };
+    setUserData({});
+
+    navigate("/");
+    setLoged(null);
+  };
 
   return (
     <div className="body-nav">
@@ -48,7 +50,8 @@ const NavBar = ({ onSearch }) => {
           <img
             src="https://desktop.petshome.app/android-chrome-192x192.png"
             alt=""
-          onClick={()=>navigate('/adminlog')}/>
+            onClick={() => navigate("/adminlog")}
+          />
         </div>
         <Container style={{ height: "5em" }}>
           <Link to={"/"} className="home-text">
@@ -90,14 +93,11 @@ const NavBar = ({ onSearch }) => {
               </Modal.Footer>
             </Modal>
           </>
-          {loged && ( 
-            <Link className="logout">
+          {loged && (
+            <div className="logout">
               <IoMdLogOut onClick={handleClick} />
-            </Link>
+            </div>
           )}
-          <p className="user-dtl">{localStorage.getItem("username")}</p>
-
-         
         </Container>
       </Navbar>
     </div>

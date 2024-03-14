@@ -14,12 +14,12 @@ import { myContext } from "../CreateContext";
 const Cat = () => {
   const { productDatas } = useContext(myContext);
 
-  const catItems = productDatas;
-
+  const catItem = productDatas;
+  const catItems = catItem .filter((items) => items.item === "cat-food");
   return (
     <div>
       <div>
-        <NavBar />
+        <NavBar/>
       </div>
       <div>
         <h1 style={{ fontFamily: '"Poppins", sans-serif' }}>
@@ -37,7 +37,7 @@ const Cat = () => {
         {catItems.map((items) => {
           return (
             <MDBCard
-              key={items.id} // Assuming each item has a unique id
+              key={items.id} 
               style={{
                 width: "15em",
                 fontFamily: "unset",

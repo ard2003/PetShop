@@ -1,76 +1,136 @@
-import React, { useState, useContext } from "react";
-import { MDBContainer, MDBInput, MDBBtn } from "mdb-react-ui-kit";
-import { Link, useNavigate } from "react-router-dom";
-import { myContext } from "./CreateContext";
-import toast from "react-hot-toast";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBIcon,
+} from "mdb-react-ui-kit";
 
-const Registration = () => {
-  const { setLoged, setUserData } = useContext(myContext);
-  const [registrationValue, setRegistrationValue] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+import { myContext } from "./CreateContext";
+
+function Registration() {
+  const { formValues,setFormValues } = useContext(myContext);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setRegistrationValue({ ...registrationValue, [name]: value });
+    setFormValues({ ...formValues, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Save user data in local storage
-    localStorage.setItem("userData", JSON.stringify(registrationValue));
-    setLoged(true);
-    setUserData(registrationValue); // Set user data in context
-    toast.success("Registration successful");
-    navigate("/");
+    const errors = validate(formValues);
+    setFormErrors(errors);
+    setIsSubmit(true);
+    if (Object.keys(errors).length === 0) {
+      saveUser(formValues);
+      navigate("/login");
+    }
+  };
+
+  const validate = (values) => {
+    const errors = {};
+    if (!values.username) {
+      errors.username = "Username is required";
+    }
+    if (!values.email) {
+      errors.email = "Email is required";
+    }
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else if (values.password.length < 4) {
+      errors.password = "Password must be at least 4 characters long";
+    }
+    return errors;
+  };
+
+  const saveUser = (userData) => {
+   
+    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+   
+    const updatedUsers = [...existingUsers, userData];
+ 
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
   return (
-    <div>
-      <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
-        <form onSubmit={handleSubmit}>
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Username"
-            id="username"
-            type="text"
-            name="username"
-            value={registrationValue.username}
-            onChange={handleChange}
-          />
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Email address"
-            id="email"
-            type="email"
-            name="email"
-            value={registrationValue.email}
-            onChange={handleChange}
-          />
-          <MDBInput
-            wrapperClass="mb-4"
-            label="Password"
-            id="password"
-            type="password"
-            name="password"
-            value={registrationValue.password}
-            onChange={handleChange}
-          />
-          <MDBBtn type="submit" className="mb-4">
-            Register
-          </MDBBtn>
-        </form>
-        <div className="text-center">
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-        </div>
-      </MDBContainer>
-    </div>
+    <MDBContainer fluid>
+      <MDBCard className="text-black m-5" style={{ borderRadius: "25px" }}>
+        <MDBCardBody>
+          <MDBRow>
+            <MDBCol
+              md="10"
+              lg="6"
+              className="order-2 order-lg-1 d-flex flex-column align-items-center"
+            >
+              <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                Sign up
+              </p>
+
+              <form onSubmit={handleSubmit}>
+                <div className="d-flex flex-row align-items-center mb-4 ">
+                  <MDBIcon fas icon="user me-3" size="lg" />
+                  <MDBInput
+                    label="Your Name"
+                    id="form1"
+                    type="text"
+                    name="username"
+                    className="w-100"
+                    value={formValues.username}
+                    onChange={handleChange}
+                  />
+                  {formErrors.username && (
+                    <p className="text-danger">{formErrors.username}</p>
+                  )}
+                </div>
+
+                <div className="d-flex flex-row align-items-center mb-4">
+                  <MDBIcon fas icon="envelope me-3" size="lg" />
+                  <MDBInput
+                    label="Your Email"
+                    id="form2"
+                    name="email"
+                    type="email"
+                    value={formValues.email}
+                    onChange={handleChange}
+                  />
+                  {formErrors.email && (
+                    <p className="text-danger">{formErrors.email}</p>
+                  )}
+                </div>
+
+                <div className="d-flex flex-row align-items-center mb-4">
+                  <MDBIcon fas icon="lock me-3" size="lg" />
+                  <MDBInput
+                    label="Password"
+                    id="form3"
+                    name="password"
+                    type="password"
+                    value={formValues.password}
+                    onChange={handleChange}
+                  />
+                  {formErrors.password && (
+                    <p className="text-danger">{formErrors.password}</p>
+                  )}
+                </div>
+
+                <MDBBtn className="mb-4" type="submit" size="lg">
+                  Register
+                </MDBBtn>
+              </form>
+            </MDBCol>
+          </MDBRow>
+        </MDBCardBody>
+      </MDBCard>
+    </MDBContainer>
   );
-};
+}
 
 export default Registration;

@@ -5,13 +5,12 @@ import NavbarAdmin from "./NavbarAdmin";
 import { Button, Modal } from "react-bootstrap";
 
 const Prodect = () => {
-  const { productDatas, setProductDatas } = useContext(myContext);
+  const { productDatas, setProductDatas,dogOrCat } = useContext(myContext);
   const [editIndex, setEditIndex] = useState(null);
   const [editData, setEditData] = useState({});
   const [newProduct, setNewProduct] = useState({ name: "", price: "", image: "" });
   const [isAdding, setIsAdding] = useState(false);
   const [show, setShow] = useState(false);
-
   const handleEdit = (index) => {
     setShow(true) 
     setEditIndex(index);
@@ -92,49 +91,55 @@ const Prodect = () => {
           <button onClick={handleCancelAdd}className="cancel-button">Cancel</button>
         </div>
       ) : (
-        <button onClick={handleAdd} className="add-button">Add Product</button>
+        <button onClick={handleAdd} className="add-button">Add Product</button>,
+        <button className="add-button">Add Product</button>
       )}
     <div className="main-body">
     <NavbarAdmin />
     
     <div className="body" >
       
-      {productDatas.map((data, index) => (
-        <div className="card-body" key={index}>
-          {editIndex === index ? (
-            <div>
-              <input
-                type="text"
-                name="name"
-                value={editData.name}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="price"
-                value={editData.price}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="image"
-                value={editData.image}
-                onChange={handleChange}
-              className="edit-input"/>
-              <button onClick={handleSaveEdit}>Save</button>
-              <button onClick={handleCancelEdit}>Cancel</button>
-            </div>
-          ) : (
-            <div>
-              <img src={data.image} alt={data.name} />
-              <h4>{data.name}</h4>
-              <p>Price: {data.price}</p>
-              <button className="delete" onClick={() => handleDelete(index)}>Delete</button>
-              <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
-            </div>
-          )}
-        </div>
-      ))}
+      {productDatas.map((data, index) => {
+        if (!dogOrCat || data.item==dogOrCat) {
+          return(
+            <div className="card-body" key={index}>
+            {editIndex === index ? (
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  value={editData.name}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="price"
+                  value={editData.price}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="image"
+                  value={editData.image}
+                  onChange={handleChange}
+                className="edit-input"/>
+                <button onClick={handleSaveEdit}>Save</button>
+                <button onClick={handleCancelEdit}>Cancel</button>
+              </div>
+            ) : (
+              <div>
+                <img src={data.image} alt={data.name} />
+                <h4>{data.name}</h4>
+                <p>Price: {data.price}</p>
+                <button className="delete" onClick={() => handleDelete(index)}>Delete</button>
+                <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
+              </div>
+            )}
+          </div>
+          )
+          
+        }
+      })}
      
       </div>
     </div>

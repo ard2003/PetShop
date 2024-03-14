@@ -16,10 +16,11 @@ import toast from "react-hot-toast";
 
 
 const AllCollection = () => {
-  const { cart, setCart, loged,productDatas} =
+  const { cart, setCart, loged,productDatas,loginValue} =
     useContext(myContext);
   const Prodects = productDatas;
   
+  const { email } = loginValue;
   const navigate = useNavigate();
 
   const [filteredProducts, setFilteredProducts] = useState(Prodects);
@@ -30,21 +31,23 @@ const AllCollection = () => {
     );
     setFilteredProducts(filtered);
   };
-  const AddToCart = (data) => {
+  const handleAddToCart = (data) => {
     if (!loged) {
-     toast.error("Please login and continue");
-
-      
+      toast.error("Please login and continue");
     } else {
-      const itemIndex = cart.findIndex((item) => item.id === data.id);
-      toast.success('successfully added')
-      if (itemIndex !== -1) {
-        const updatedCart = [...cart];
-        updatedCart[itemIndex].quantity += 1; 
-        setCart(updatedCart);
+      const userCarts = JSON.parse(localStorage.getItem("userCarts")) || {};
+      const currentUserCart = userCarts[email] || [];
+      const existingItemIndex = currentUserCart.findIndex(
+        (item) => item.id === data.id
+      );
+      if (existingItemIndex !== -1) {
+        currentUserCart[existingItemIndex].quantity += 1;
       } else {
-        setCart([...cart, { ...data, quantity: 1 }]); 
+        currentUserCart.push({ ...data, quantity: 1 });
       }
+      userCarts[email] = currentUserCart;
+      localStorage.setItem("userCarts", JSON.stringify(userCarts));
+      toast.success("Item added to cart");
     }
   };
 
@@ -83,7 +86,7 @@ const AllCollection = () => {
               <MDBCardBody>
                 <MDBCardTitle>{data.name}</MDBCardTitle>
                 <MDBCardText>Price: {data.price}</MDBCardText>
-                <MDBBtn onClick={() => AddToCart(data)}>Add to cart</MDBBtn>
+                <MDBBtn onClick={() => handleAddToCart(data)}>Add to cart</MDBBtn>
               </MDBCardBody>
             </MDBCard>
           </div>
