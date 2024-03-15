@@ -70,16 +70,13 @@ const Prodect = () => {
             value={newProduct.name}
             onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
           />
-          
-               
-                <input
+          <input
             type="text"
             name="price"
             placeholder="Price"
             value={newProduct.price}
             onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
           />
-            
           <input
             type="text"
             name="image"
@@ -88,63 +85,61 @@ const Prodect = () => {
             onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
           />
           <button onClick={handleSaveNewProduct} className="save-button">Save</button>
-          <button onClick={handleCancelAdd}className="cancel-button">Cancel</button>
+          <button onClick={handleCancelAdd} className="cancel-button">Cancel</button>
         </div>
       ) : (
-        <button onClick={handleAdd} className="add-button">Add Product</button>,
-        <button className="add-button">Add Product</button>
+        <button onClick={handleAdd} className="add-button">Add Product</button>
       )}
-    <div className="main-body">
-    <NavbarAdmin />
-    
-    <div className="body" >
-      
-      {productDatas.map((data, index) => {
-        if (!dogOrCat|| data.item==dogOrCat) {
-          return(
-            <div className="card-body" key={index}>
-            {editIndex === index ? (
-              <div>
-                <input
-                  type="text"
-                  name="name"
-                  value={editData.name}
-                  onChange={handleChange}
-                />
-                <input
-                  type="text"
-                  name="price"
-                  value={editData.price}
-                  onChange={handleChange}
-                />
-                <input
-                  type="text"
-                  name="image"
-                  value={editData.image}
-                  onChange={handleChange}
-                className="edit-input"/>
-                <button onClick={handleSaveEdit}>Save</button>
-                <button onClick={handleCancelEdit}>Cancel</button>
-              </div>
-            ) : (
-              <div>
-                <img src={data.image} alt={data.name} />
-                <h4>{data.name}</h4>
-                <p>Price: {data.price}</p>
-                <button className="delete" onClick={() => handleDelete(index)}>Delete</button>
-                <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
-              </div>
-            )}
-          </div>
-          )
-          
-        }
-      })}
-     
+  
+      <div className="main-body">
+        <NavbarAdmin />
+        <div className="body">
+          {productDatas.map((data, index) => {
+            if (!dogOrCat || data.item === dogOrCat) {
+              return (
+                <div className="card-body" key={index}>
+                  {editIndex === index ? (
+                    <div>
+                      <input
+                        type="text"
+                        name="name"
+                        value={editData.name}
+                        onChange={handleChange}
+                      />
+                      <input
+                        type="text"
+                        name="price"
+                        value={editData.price}
+                        onChange={handleChange}
+                      />
+                      <input
+                        type="text"
+                        name="image"
+                        value={editData.image}
+                        onChange={handleChange}
+                        className="edit-input"
+                      />
+                      <button onClick={handleSaveEdit}>Save</button>
+                      <button onClick={handleCancelEdit}>Cancel</button>
+                    </div>
+                  ) : (
+                    <div>
+                      <img src={data.image} alt={data.name} />
+                      <h4>{data.name}</h4>
+                      <p>Price: {data.price}</p>
+                      <button className="delete" onClick={() => handleDelete(index)}>Delete</button>
+                      <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
+                    </div>
+                  )}
+                </div>
+              )
+            }
+          })}
+        </div>
       </div>
-    </div>
     </>
   );
+  
 };
 
 export default Prodect;
