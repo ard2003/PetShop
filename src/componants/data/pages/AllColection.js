@@ -8,19 +8,17 @@ import {
   MDBCardImage,
   MDBBtn,
 } from "mdb-react-ui-kit";
-import ProdectData from "../ProdectData";
 import NavBar from "../Navbar";
 import { myContext } from "../CreateContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../redux/CartSlice"; // Import addToCart action from your CartSlice
 
 const AllCollection = () => {
-  const { cart, setCart, loged,productDatas,loginValue} =
-    useContext(myContext);
+  const { loged, productDatas, loginValue } = useContext(myContext);
   const Prodects = productDatas;
-  
-  const { email } = loginValue;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [filteredProducts, setFilteredProducts] = useState(Prodects);
@@ -31,22 +29,12 @@ const AllCollection = () => {
     );
     setFilteredProducts(filtered);
   };
+
   const handleAddToCart = (data) => {
     if (!loged) {
       toast.error("Please login and continue");
     } else {
-      const userCarts = JSON.parse(localStorage.getItem("userCarts")) || {};
-      const currentUserCart = userCarts[email] || [];
-      const existingItemIndex = currentUserCart.findIndex(
-        (item) => item.id === data.id
-      );
-      if (existingItemIndex !== -1) {
-        currentUserCart[existingItemIndex].quantity += 1;
-      } else {
-        currentUserCart.push({ ...data, quantity: 1 });
-      }
-      userCarts[email] = currentUserCart;
-      localStorage.setItem("userCarts", JSON.stringify(userCarts));
+      dispatch(addToCart(data));
       toast.success("Item added to cart");
     }
   };
