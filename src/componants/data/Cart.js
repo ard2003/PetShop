@@ -15,7 +15,7 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
-  const updateCart = (updatedCart) => {
+  const updateCart = (updatedCart)  => {
     const carts = JSON.parse(localStorage.getItem("userCarts")) || {};
     carts[email] = updatedCart;
     localStorage.setItem("userCarts", JSON.stringify(carts));

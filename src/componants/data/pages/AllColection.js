@@ -1,5 +1,5 @@
 // AllCollection.js
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   MDBCard,
   MDBCardBody,
@@ -14,30 +14,80 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/CartSlice"; // Import addToCart action from your CartSlice
+import { Axios } from "../MainRoouter";
 
 const AllCollection = () => {
-  const { loged, productDatas, loginValue } = useContext(myContext);
-  const Prodects = productDatas;
+  const { loged, serch } = useContext(myContext); // Context values for search and logged-in status
+  const [products, setProducts] = useState([]); // State to hold all products
+  const [filteredProducts, setFilteredProducts] = useState([]); // State to hold filtered products
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const [filteredProducts, setFilteredProducts] = useState(Prodects);
+  // Fetch product data from the backend when the component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await Axios.get("/user/products"); // Fetch products from backend API
+        setProducts(response.data); // Set the fetched products
+        setFilteredProducts(response.data); // Initially, filtered products are the same as fetched products
+      } catch (error) {
+        console.error("Error fetching Product", error);
+      }
+    };
 
+    fetchData();
+  }, []);
+
+  // Update filtered products when the search term changes
+  useEffect(() => {
+    handleSearch(serch);
+  }, [serch, products]); // Re-run search when `serch` or `products` change
+
+  // Filter products based on the search term
   const handleSearch = (searchTerm) => {
-    const filtered = Prodects.filter((product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredProducts(filtered);
-  };
-
-  const handleAddToCart = (data) => {
-    if (!loged) {
-      toast.error("Please login and continue");
+    if (!searchTerm) {
+      // If search term is empty, reset filtered products to all products
+      setFilteredProducts(products);
     } else {
-      dispatch(addToCart(data));
-      toast.success("Item added to cart");
+      // Filter products based on the search term
+      const filtered = products.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredProducts(filtered);
     }
   };
+
+
+const AddtoCart = async (product) => {
+ 
+  if (loged) {
+    try {
+      
+      const response = await Axios.post(
+        "/user/add/cart",
+        { productId: product._id },
+        { withCredentials: true } 
+      );
+      if (response.status === 200) {
+        toast.success("Product added to cart"); 
+      } else {
+        toast.error("Failed to add product to cart"); 
+      }
+    } catch (error) {
+      // Handle errors that occur during the request
+      console.error("Error adding product to cart:", error);
+      if (error.response && error.response.status === 401) {
+        // Specific handling for unauthorized errors
+        toast.error("Please login and continue");
+      } else {
+        toast.error("Something went wrong. Please try again later."); // General error message
+      }
+    }
+  } else {
+    // Notify the user if they are not logged in
+    toast.error("Please login and continue");
+  }
+};
+
 
   return (
     <>
@@ -68,13 +118,13 @@ const AllCollection = () => {
               <MDBCardImage
                 src={data.image}
                 position="top"
-                alt="..."
+                alt="Product"
                 height={"200"}
               />
               <MDBCardBody>
                 <MDBCardTitle>{data.name}</MDBCardTitle>
                 <MDBCardText>Price: {data.price}</MDBCardText>
-                <MDBBtn onClick={() => handleAddToCart(data)}>Add to cart</MDBBtn>
+                <MDBBtn onClick={() => AddtoCart(data)}>Add to cart</MDBBtn>
               </MDBCardBody>
             </MDBCard>
           </div>

@@ -8,7 +8,6 @@ import { myContext } from "./CreateContext";
 import AllColection from "./pages/AllColection";
 import Cat from "./pages/Cat";
 import Dog from "./pages/Dog";
-import { CartProvider } from "react-use-cart";
 import Cart from "./Cart";
 import Payment from "./Payment";
 import { Toaster } from "react-hot-toast";
@@ -17,12 +16,20 @@ import AdminLog from "./Adminsection/AdminLog";
 import Prodect from "./Adminsection/Prodect";
 import User from "./Adminsection/User";
 import ProdectData from "./ProdectData";
+import axios from "axios";
+
+export const Axios = axios.create({
+  baseURL: "http://localhost:5000/api",
+  // headers: {
+  //   Authorization: Cookies.get("token"),
+  // },
+  })
 
 
 const MainRoouter = () => {
   const [serch, setSerch] = useState("");
   const [cart, setCart] = useState([]);
-  const [productDatas, setProductDatas]=useState(ProdectData)
+  const [productDatas, setProductDatas]=useState([])
   const inputValues = { username: "", email: "", password: "" };
   const [formValues, setFormValues] = useState(inputValues);
   const [loged, setLoged] = useState(false);

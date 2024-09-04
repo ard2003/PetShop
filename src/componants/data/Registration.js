@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+// Registration.js
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   MDBBtn,
@@ -10,35 +11,57 @@ import {
   MDBInput,
   MDBIcon,
 } from "mdb-react-ui-kit";
-
 import { myContext } from "./CreateContext";
+import { Axios } from "./MainRoouter";
+import toast from "react-hot-toast";
 
 function Registration() {
-  const { formValues,setFormValues } = useContext(myContext);
+  const { setUserData } = useContext(myContext);
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = validate(formValues);
     setFormErrors(errors);
-    setIsSubmit(true);
+
+    
     if (Object.keys(errors).length === 0) {
-      saveUser(formValues);
-      navigate("/login");
+      try {
+        // Send form values to backend to register user
+        const response = await Axios.post("/user/registration", formValues);
+
+        if (response.status === 201) {
+          toast.success("Registration successful");
+          setUserData(response.data); // Set user data if needed in the context
+          navigate("/colection"); // Redirect to login after successful registration
+        }
+      } catch (error) {
+        // Handle backend validation errors
+        if (error.response && error.response.data) {
+          toast.error(error.response.data.message || "Registration failed");
+        } else {
+          toast.error("Something went wrong. Please try again.");
+        }
+      }
     }
   };
 
+  
   const validate = (values) => {
     const errors = {};
-    if (!values.username) {
-      errors.username = "Username is required";
+    if (!values.name) {
+      errors.name = "Name is required";
     }
     if (!values.email) {
       errors.email = "Email is required";
@@ -49,15 +72,6 @@ function Registration() {
       errors.password = "Password must be at least 4 characters long";
     }
     return errors;
-  };
-
-  const saveUser = (userData) => {
-   
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-   
-    const updatedUsers = [...existingUsers, userData];
- 
-    localStorage.setItem("users", JSON.stringify(updatedUsers));
   };
 
   return (
@@ -75,19 +89,19 @@ function Registration() {
               </p>
 
               <form onSubmit={handleSubmit}>
-                <div className="d-flex flex-row align-items-center mb-4 ">
+                <div className="d-flex flex-row align-items-center mb-4">
                   <MDBIcon fas icon="user me-3" size="lg" />
                   <MDBInput
                     label="Your Name"
                     id="form1"
                     type="text"
-                    name="username"
+                    name="name"
                     className="w-100"
-                    value={formValues.username}
+                    value={formValues.name}
                     onChange={handleChange}
                   />
-                  {formErrors.username && (
-                    <p className="text-danger">{formErrors.username}</p>
+                  {formErrors.name && (
+                    <p className="text-danger">{formErrors.name}</p>
                   )}
                 </div>
 
